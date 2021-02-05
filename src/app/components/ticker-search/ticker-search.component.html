@@ -1,7 +1,9 @@
 <div>
-    <input type="text" (keyup)="onKey($event)">
-    <button (click)="getStock(keyValue)">Submit</button>
-    <ul *ngFor="let ticker of tickerSearchArray">
-        <li (click)="getStock(keyValue)">{{ticker.symbol.toLocaleUpperCase()}} | {{ticker.name}}</li>
-    </ul>
+    <input type="text" (keyup)="onKey($event)" value="{{textFieldInput}}" />
+    <button (click)="getStock(searchValue)">Submit</button>
+  <ul *ngFor="let ticker of tickerSearchArray">
+    <li (click)="getStock(ticker.symbol)">
+      {{ ticker.symbol.toLocaleUpperCase() }} | {{ ticker.name }}
+    </li>
+  </ul>
 </div>

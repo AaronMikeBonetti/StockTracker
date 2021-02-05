@@ -1,8 +1,6 @@
 import { StocksUiService } from '../../stocks-ui.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { Ticker } from '../../interfaces/ticker.model';
-import * as ticker from '../../../assets/tickers/tickers.json';
-
 
 @Component({
   selector: 'app-stocks',
@@ -11,22 +9,31 @@ import * as ticker from '../../../assets/tickers/tickers.json';
 })
 
 export class StocksComponent implements OnInit {
-  tickerString: string;
-  tickerParsed: [Ticker];
 
-  searchValue;
+  stock: any;
+  showSpinner: boolean;
 
   constructor(
     private uiService: StocksUiService
   ) { }
 
-  ngOnInit(): void {
-    
-  }
+  ngOnInit(): void {}
 
-  getSearchValue(e){
-    this.searchValue = e
+  getStock(ticker: Ticker): any{
+    this.showSpinner = true;
+    this.uiService.stockHttpGet(ticker).subscribe(
+      response => this.stock = response,
+      error => this.handleError(error),
+      () => this.finishRequest(this.stock)
+    );
   }
-
+  finishRequest(response): void {
+    this.showSpinner = false;
+    this.stock = response[0];
+  }
+  handleError(error: any): void {
+    this.showSpinner = false;
+    console.log(error);
+  }
 
 }

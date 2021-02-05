@@ -13,12 +13,15 @@ export class TickerSearchComponent implements OnInit {
   tickersParsed: [Ticker];
   tickerSearchArray: Array<Ticker>;
   searchValue: string;
+  textFieldInput: string;
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.textFieldInput = '';
+  }
 
-  onKey(e: any) {
+  onKey(e: any): void {
     this.searchValue = e.target.value.toLowerCase();
     this.tickersParsed = JSON.parse(
       JSON.stringify(tickerData).toLowerCase()
@@ -30,7 +33,6 @@ export class TickerSearchComponent implements OnInit {
       (e.which >= 96 && e.which <= 105) ||
       e.which === 8
     ) {
-      this.searchValueOutput.emit(this.searchValue);
       this.tickersParsed.map((ticker: Ticker) => {
         if (
           ticker.symbol.indexOf(this.searchValue) !== -1 &&
@@ -41,5 +43,10 @@ export class TickerSearchComponent implements OnInit {
       });
     }
     this.tickerSearchArray = this.tickerSearchArray.splice(0, 10);
+  }
+
+  getStock(ticker): void {
+    this.tickerSearchArray = [];
+    this.searchValueOutput.emit(ticker);
   }
 }

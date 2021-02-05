@@ -1,4 +1,13 @@
-<div>
-    <app-ticker-search (searchValueOutput)="getSearchValue($event)"></app-ticker-search>
-    {{searchValue}}
+<app-ticker-search (searchValueOutput)="getStock($event)"></app-ticker-search>
+<div *ngIf="stock && !showSpinner">
+    <div>
+        <img src="{{stock.image}}" alt="Company Logo">
+        <h1>{{stock.companyName}}</h1>
+        <address>
+            <p><span>Address:</span> {{stock.address ? stock.address : "Unknown"}}</p>
+            <p><span>City:</span> {{stock.city ? stock.city : "Unknown"}}</p> 
+            <p><span>Country:</span> {{stock.country ? stock.country : "Unknown"}}</p>
+        </address>
+    </div>
+    
 </div>
